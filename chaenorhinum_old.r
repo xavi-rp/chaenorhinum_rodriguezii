@@ -7,27 +7,31 @@
 ###########################################################################################
 
 # chaenorhinum.R
-#
+
 # Created on: 2017-2018
-#
+
 # Contact: Xavier Rotllan-Puig (xavi@rotllanpuig.cat)
-#
-# Description: The aim of this script is to explore the breeding system of C. rodriguezii. 
-# Here we analyse the data obtained in field experiments (i.e. bagging) as well as other 
-# data collected (i.e. floral visitors, pollen/ovule ratio)
-#
+
+# Description: The aim of this script is to explore the differences in weight between the 
+# three types of C. rodriguezii seeds found in the experiments of its breeding system 
+# Types of seeds: 1 = white, 2 = black, 3 = deformed
+
 
 # ------------------------------------------------------------------------------------------
 
 #### Used Packages ####
 if(require(xlsx)==FALSE){install.packages("xlsx", repos = "https://cloud.r-project.org"); library(xlsx)
 } else {library(xlsx)}
+
 if(require(car)==FALSE){install.packages("car", repos = "https://cloud.r-project.org"); library(car)
 } else {library(car)}
+
 #if(require(pgirmess)==FALSE){install.packages("pgirmess", repos = "https://cloud.r-project.org"); library(pgirmess)
 #} else {library(pgirmess)}
-#if(require(PMCMR)==FALSE){install.packages("PMCMR", repos = "https://cloud.r-project.org"); library(PMCMR)
-#} else {library(PMCMR)}
+
+if(require(PMCMR)==FALSE){install.packages("PMCMR", repos = "https://cloud.r-project.org"); library(PMCMR)
+} else {library(PMCMR)}
+
 #if(require(knitr)==FALSE){install.packages("knitr", repos = "https://cloud.r-project.org"); library(knitr)
 #} else {library(knitr)}
 
@@ -46,30 +50,28 @@ str(chaenos_DF)
 
 
 
-#### Difference weight of seed types: 2011 - 2012 data ####
-# types of seeds: 1 = white, 2 = black, 3 = deformed
+#### 2011 - 2012 data ####
 
 ch_11_12 <- chaenos_DF
-names(ch_11_12)
-View(ch_11_12)
 
-ch_11_12_w <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.blanques..mg.) , c(1:3, 12)] # removing NA
+# types of seeds: 1 = white, 2 = black, 3 = deformed
+ch_11_12_w <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.blanques..mg.) , c(1, 12)] # removing NA
 ch_11_12_w <- ch_11_12_w[ ch_11_12_w$Pes.100.llavors.blanques..mg. != 0 , ]  #removing rows with 0
 ch_11_12_w$ID <- 1   # giving number 1 to white seeds
-names(ch_11_12_w)[c(1, 4)] <- c("type", "weight")  # changing column names
+names(ch_11_12_w) <- c("type", "weight")  # changing column names
 ch_11_12_w
 
-ch_11_12_b <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.negres..mg.) , c(1:3, 15)]
+ch_11_12_b <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.negres..mg.) , c(1, 15)]
 ch_11_12_b <- ch_11_12_b[ ch_11_12_b$Pes.100.llavors.negres..mg. != 0 , ]
 ch_11_12_b$ID <- 2
-names(ch_11_12_b)[c(1, 4)] <- c("type", "weight")
+names(ch_11_12_b) <- c("type", "weight")
 nrow(ch_11_12_b)
 ch_11_12_b
 
-ch_11_12_d <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.deformades..mg.) , c(1:3, 18)]
+ch_11_12_d <- ch_11_12[ !is.na(ch_11_12$Pes.100.llavors.deformades..mg.) , c(1, 18)]
 ch_11_12_d <- ch_11_12_d[ ch_11_12_d$Pes.100.llavors.deformades..mg. != 0 , ]
 ch_11_12_d$ID <- 3
-names(ch_11_12_d)[c(1, 4)] <- c("type", "weight")
+names(ch_11_12_d) <- c("type", "weight")
 nrow(ch_11_12_d)
 
 weight_seeds <- rbind(ch_11_12_w, ch_11_12_b, ch_11_12_d)
@@ -83,18 +85,19 @@ boxplot(weight ~ type, data = weight_seeds, xlab = "type of seeds: 1 = white, 2 
 dev.off()
 
 
-## Are there significant differences between the three groups?
+# Are there significant differences between the three groups?
+
 #Shapiro-Wilk to check for Normality of each type
 sh_w <- shapiro.test(ch_11_12_w$weight)
-sh_w     # n = 14, W = 0.8852, p-value = 0.06895  <-- normality
+sh_w     # W = 0.8852, p-value = 0.06895  <-- normality
 sh_b <- shapiro.test(ch_11_12_b$weight)
-sh_b     # n = 65, W = 0.97632, p-value = 0.2463  <-- normality
+sh_b     # W = 0.97632, p-value = 0.2463  <-- normality
 sh_d <- shapiro.test(ch_11_12_d$weight)
-sh_d     # n = 13, W = 0.90902, p-value = 0.1778  <-- normality
+sh_d     # W = 0.90902, p-value = 0.1778  <-- normality
 
 # Test for homoscedasticity
 lev <- leveneTest(weight ~ type, data = weight_seeds)
-lev    # Not equal variances (n = 92, F = 0.9098, p = 0.4063) <-- homoscedasticity
+lev    # Not equal variances (F = 0.9098, p = 0.4063) <-- homoscedasticity
 
 # Fitting an ANOVA (Probably would be better using a mixed model with random effects: population and year)
 aov_weight_seeds <- aov(weight ~ type, data = weight_seeds)
