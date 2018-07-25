@@ -1,0 +1,107 @@
+---
+title: "Pollination, ecological niche and conservation status of a narrow endemic of the Balearic Islands (Chaenorhinum rodriguezii)"
+author: "Xavier Rotllan-Puig"
+date: "24/7/2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r echo = FALSE}
+source("chaenorhinum.R", echo = FALSE)
+if(require(captioner)==FALSE){install.packages("captioner", repos = "https://cloud.r-project.org"); library(captioner)
+} else {library(captioner)}
+
+figs <- captioner(prefix="Figure")
+tbls <- captioner(prefix="Table")
+```
+
+## ABSTRACT
+
+
+## INTRODUCTION
+
+
+Pollen-ovule ratios and other features (e.g. pollen grain size, pollen per flower) are potentially indicating differences in the efficiency of pollination. We therefore collected flower buds to determine pollen-ovule ratios (P/Os) to get an insight into the efficiency of the breeding and pollination system of the species (Cruden,1977; Plitmann and Levin, 1990). According to Cruden (1977, 2000) pollen-ovule ratios (P/Os) reflect the pollination efficiency, i.e., the likelihood of pollen grains reaching the stigma. In consequence, there is a tendency of decreasing P/Os from xenogamy (outcrossing) to facultative xenogamy to autogamy (self-pollination) (Cruden, 1977, 2000). Since most Conophytum species are obligately outcrossing (Hammer, 2002), it is likely that P/Os reflect the pollination efficiency of the different pollinator types (e.g. moths versus day active pollinators; nectar drinking bee flies or butterflies versus pollen collecting and nectar drinking pollen wasps or bees). (((NOTA: Copiat de  Jürgens & Witt, 2014)))
+
+
+## MATERIALS AND METHODS
+
+### Study species and area
+
+### Breeding system
+```{r echo = FALSE}
+tbls(name = "t1", caption = "Number of bagged flowers and controls used in this study in each population and year.")
+```
+
+To study the (level of??) autogamy   (((NOTA: Per justificar el perquè només s'ha mirat això, hauria de buscar si aquest gènere/família sol ser al·lògam i l'autogàmia podria ser una adaptació a l'illa, pocs pol·linitzadors, etc)))   in this species, we conducted bagging experiments *in situ* in the two main populations (i.e. Puig Major and Massanella) during 2011, 2012 and 2017. Before their anthesis, we marked buds and bagged with white cloth which did not allow the passage of pollen or floral visitors. We also marked buds for control. `r tbls("t1", display = "c")` shows the number of bagged flowers and marked controls used in this study in each population and year.
+
+At the same time, we gathered buds in order to calculate their P/O ratio following Cruden (1977) method. On the one hand, the ovary was dissected, and the ovules counted under a stereomicroscope. On the other hand, the number of pollen grains were obtained with a particle counter and size analyser (Z2; Coulter, Hialeah, Fla., USA) addapting the methodology proposed in its manual.
+
+We found three types of seeds: black seeds (expected mature seeds), white seeds (likely immature) and deformed seeds. We observed, by means of an mixed model (R package "lme4"), whether there were differences between the weight of these three types of seeds (weight normalized to 100 seeds), in order to accept or discard this parameter as a measure of autogamy. 
+
+### Floral visitors
+
+Flower visitor observations were made in the two populations during 2012's main flowering season (May-June). During four field trips, we conducted flower visitor observations on 28 individuals in periods of five and ten minutes, accumulating a total of 145 minutes of observation. One flower visitor was captured for later identification. This specimen was deposited in the insect collections of the Laboratory of Terrestrial Ecology (IMEDEA).
+
+### Pollen-ovule ratios (and pollen grain size?)
+
+We gathered plant material to determine the pollen grain number and ovule number. For this purpose, during 2012's fieldwork season, we collected 16 mature floral buds from both two plant's populations. We stored them in 70% ethyl alcohol for later count in laboratory.
+Ovule number per flower was counted under a dissecting microscope. Alternatively, pollen grain number per flower was determined by means of 
+The P/O was calculated following Cruden's manual for hermaphrodite species (1977)
+Differences (((NOTA: Jürgens & Witt (2014): Differences in pollen grain and ovule number per flower, and P/Os among pollination syndromes (diurnal versus nocturnal) were analysed using KruskaleWallis ANOVA, because some variables were not normally distributed even after log-transforming (KolmogoroveSmirnov test). Statistica (release 7.0; StatSoft, 2004) was used for all statistical analyses)))    in pollen grain and ovule number per flower, and P/Os among breading treatments (autogamy vs. allogamy) year and population were analysed using bla-bla.   tal-tal Package (R...) was used for all statistical analyses
+
+
+### Demography of the Puig Major population
+
+
+### Species Distribution Modelling / Ecological Niche Model
+
+
+
+## RESULTS
+
+### Study species and area
+
+### Breeding system
+
+We have found significant differences `r  paste0("(Chisq = ", round(anova_mix_mod$Chisq, 3), "; Pr(>Chisq) = ", signif(anova_mix_mod[3][1,1], 3), ")") ` between the weights of the three types of seeds (i.e. white, black and deformed). Thus, we have used only black seeds for weight, but we have uses together black and white for number of seed, assuming that the white seeds are unripe (think about using deformed or not).
+
+
+### Floral visitors
+
+Only three floral visitors were observed in one of the two populations (Puig Major). Two of them were the same species (Lassioglossum?) and the other one was another small solitary bee not identified.
+
+### Pollen-ovule ratios (and pollen grain size?)
+
+### Demography of the Puig Major population
+
+### Species Distribution Modelling / Ecological Niche Model
+
+
+## DISCUSSION
+
+Comentar alguna cosa sobre que s'hauria de fer proves of long-term storage of seeds ja que s'han donat problemes per trencar la dormància o degut a mala conservació de les llavors.
+In order to evaluate their level of compatibility, cross-pollination between populations should be done, as it has been done for other narrowly endemic species with disjunct populations on the Balearics (Cursach and Rita, 2012). 
+
+
+
+## ACKNOWLEDGEMENTS
+
+
+## REFERENCES
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
